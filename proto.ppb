@@ -1,0 +1,17 @@
+struct Boh:
+  value1 bool
+  value2 u_int16
+
+struct Test:
+  value1 bool
+  value2 u_int16
+  value3 int16
+  value4 u_int8
+  value5 int8
+  value7 u_int32
+  value6 int32
+  value8 u_int64
+  value9 int64
+  value10 float
+  value11 double
+  value12 Boh

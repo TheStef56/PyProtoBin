@@ -92,25 +92,26 @@ def generate_python_classes():
                 count += ctype_s[Lang.SIZE.value]
         res += "\n"
 
-        # get_values -----------------------------------------------------------------
+        # to_binary ------------------------------------------------------------------
 
-        res += "    def get_values(self):\n"
-        res += "        return (\n"
-        for param, _ in items:
-            res += f"            self.{param},\n"
-        res += "        )\n\n"
-
-        # get_binary ------------------------------------------------------------------
-
-        res += "    def get_binary(self):\n"
+        res += "    def to_binary(self):\n"
         res += "        data = bytearray()\n"
         for param, ctype in items:
             type_check(ctype, obj)
             if ctype not in struct_symbols.keys():
-                res += f"        data += self.{param}.get_binary()\n"
+                res += f"        data += self.{param}.to_binary()\n"
             else:
                 res += f"        data += struct.pack('<{struct_symbols[ctype][Lang.STRUCT_PACK.value]}', self.{param})\n"
         res += "        return data\n\n"
+
+        # values -----------------------------------------------------------------
+
+        res += "    def values(self):\n"
+        res += "        return (\n"
+        for param, _ in items:
+            res += f"            self.{param},\n"
+        res += "        )\n"
+
     return res
 
 def generate_c_structs():

@@ -13,18 +13,17 @@ class Boh:
         self.value1 = struct.unpack('<?', data[0:1])[0]
         self.value2 = struct.unpack('<H', data[1:3])[0]
 
-    def get_values(self):
-        return (
-            self.value1,
-            self.value2,
-        )
-
-    def get_binary(self):
+    def to_binary(self):
         data = bytearray()
         data += struct.pack('<?', self.value1)
         data += struct.pack('<H', self.value2)
         return data
 
+    def values(self):
+        return (
+            self.value1,
+            self.value2,
+        )
 class Test:
     size = 46
 
@@ -59,7 +58,23 @@ class Test:
         self.value12 = Boh()
         self.value12.from_binary(data[43:46]) 
 
-    def get_values(self):
+    def to_binary(self):
+        data = bytearray()
+        data += struct.pack('<?', self.value1)
+        data += struct.pack('<H', self.value2)
+        data += struct.pack('<h', self.value3)
+        data += struct.pack('<B', self.value4)
+        data += struct.pack('<b', self.value5)
+        data += struct.pack('<I', self.value7)
+        data += struct.pack('<i', self.value6)
+        data += struct.pack('<Q', self.value8)
+        data += struct.pack('<q', self.value9)
+        data += struct.pack('<f', self.value10)
+        data += struct.pack('<d', self.value11)
+        data += self.value12.to_binary()
+        return data
+
+    def values(self):
         return (
             self.value1,
             self.value2,
@@ -74,20 +89,3 @@ class Test:
             self.value11,
             self.value12,
         )
-
-    def get_binary(self):
-        data = bytearray()
-        data += struct.pack('<?', self.value1)
-        data += struct.pack('<H', self.value2)
-        data += struct.pack('<h', self.value3)
-        data += struct.pack('<B', self.value4)
-        data += struct.pack('<b', self.value5)
-        data += struct.pack('<I', self.value7)
-        data += struct.pack('<i', self.value6)
-        data += struct.pack('<Q', self.value8)
-        data += struct.pack('<q', self.value9)
-        data += struct.pack('<f', self.value10)
-        data += struct.pack('<d', self.value11)
-        data += self.value12.get_binary()
-        return data
-
